@@ -25,6 +25,15 @@ Dovetail_CubeFaces = [
   [6,7,3,2],  // back
   [7,4,0,3]]; // left
   
+
+//圆形头部区域
+rotate([0,90,0]){
+translate([-215/2,dovetail_base/2,-dovetail_height]){
+cylinder(dovetail_height+5,40,40);
+}
+}
+
+//U型框架区域
 difference(){
 polyhedron( Dovetail_CubePoints, Dovetail_CubeFaces );
 translate([100,dovetail_base/2,0]){
@@ -37,25 +46,30 @@ polyhedron( Dovetail_CubePoints, Dovetail_CubeFaces );
 }
 
 translate([-15,0,0]){
-cube([dovetail_height,dovetail_base,215]);
+cube([dovetail_height,dovetail_base,dual_arms_gap+15]);
 }
 
 //底部重锤杆连接区
 difference(){
-translate([200-15,-50,0]){
-cube([dovetail_height,dovetail_base,215]);}
+translate([200-dovetail_height,-50,dovetail_height]){
+//横向平板
+cube([dovetail_height,dovetail_base,dual_arms_gap-dovetail_height]);
 
+//平板转接-正向右侧
+translate([-40,dovetail_base-dovetail_base,0]){
+cube([dovetail_height+40,dovetail_base+6+dovetail_base,dovetail_height]);
+}
+//平板转接-正向左侧
+translate([-40,dovetail_base-dovetail_base,dual_arms_gap-dovetail_height*2]){
+cube([dovetail_height+40,dovetail_base+6+dovetail_base,dovetail_height]);
+}
+
+}
 translate([dovetail_length,dovetail_base/2-50,(dual_arms_gap+15)/2]){
 rotate([0,90,0]){
 cylinder(dovetail_height*4,6.5,6.5,center=true);
+}}
 }
-}
-}
+ 
 
 
-//圆形头部区域
-rotate([0,90,0]){
-translate([-215/2,dovetail_base/2,-dovetail_height]){
-cylinder(dovetail_height,40,40);
-}
-}
